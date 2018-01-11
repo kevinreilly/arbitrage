@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>The greatest news app ever</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+		<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>-->
+	</head>
+	<body style="background:#212529;margin-top:30px;">
+		<div id="app">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-9">
+						<h2 class="text-light">Market Differentials</h2>
+						<table class="table table-response table-bordered table-dark table-hover">
+							<thead>
+								<tr class="bg-dark">
+									<th></th>
+									<th>GDAX</th>
+									<th>Binance</th>
+									<th>Bitstamp</th>
+									<th>Differential</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="bg-dark">BTC/USD</td>
+									<td>{{prices.gdax.btcusd}}</td>
+									<td>{{prices.binance.btcusd}}</td>
+									<td></td>
+									<td v-bind:class="{'bg-success': alerts.btcusd}">{{diffs.btcusd.diff}}</td>
+								</tr>
+								<tr>
+									<td class="bg-dark">BCH/USD</td>
+									<td>{{prices.gdax.bchusd}}</td>
+									<td>{{prices.binance.bchusd}}</td>
+									<td></td>
+									<td v-bind:class="{'bg-success': alerts.bchusd}">{{diffs.bchusd.diff}}</td>
+								</tr>
+								<tr>
+									<td class="bg-dark">ETH/USD</td>
+									<td>{{prices.gdax.ethusd}}</td>
+									<td>{{prices.binance.ethusd}}</td>
+									<td></td>
+									<td v-bind:class="{'bg-success': alerts.ethusd}">{{diffs.ethusd.diff}}</td>
+								</tr>
+								<tr>
+									<td class="bg-dark">LTC/USD</td>
+									<td>{{prices.gdax.ltcusd}}</td>
+									<td>{{prices.binance.ltcusd}}</td>
+									<td></td>
+									<td v-bind:class="{'bg-success': alerts.ltcusd}">{{diffs.ltcusd.diff}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-md-3">
+						<h2 class="text-light">Alerts</h2>
+						<div v-html="messages.message"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+		<script src="app.js"></script>
+	</body>
+</html>
