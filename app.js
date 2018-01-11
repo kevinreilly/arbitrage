@@ -137,8 +137,8 @@ const vm = new Vue({
   	},
 	mounted: function() {
 		this.getPrices();
-		/*this.interval = setInterval(function(){
+		this.interval = setInterval(function(){
 			this.getPrices();
-		}.bind(this), 60000);*/
+		}.bind(this), 60000);
 	}
 });
