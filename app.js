@@ -16,7 +16,140 @@ const vm = new Vue({
 				ltcusd: null,
 				bchusd: null
 			}
-		}
+		},
+		exchanges: [
+			{
+				btcusd: {
+					markets: [
+						{
+							name:'gdax',
+							endpoint: 'https://api.gdax.com/products/BTC-USD/ticker',
+							price: null
+						},
+						{
+							name:'binance'
+						}
+					],
+					endpointID: 'BTC-USD',
+					price: null
+				}
+			},
+			{
+				bchusd: {
+					endpointID: 'BCH-USD',
+					price: null
+				}
+			},
+			{
+				ethusd: {
+					endpointID: 'ETH-USD',
+					price: null
+				}
+			},
+			{
+				ltcusd: {
+					endpointID: 'LTC-USD',
+					price: null
+				}
+			},
+			{
+				ethbtc: {
+					endpointID: 'ETH-BTC',
+					price: null
+				}
+			},
+			{
+				ltcbtc: {
+					endpointID: 'LTC-BTC',
+					price: null
+				}
+			}
+		],
+		markets: [
+			{
+				name: 'gdax',
+				endpointURL: 'https://api.gdax.com/products/###/ticker'
+				exchanges: [
+					{
+						btcusd: {
+							endpointID: 'BTC-USD',
+							price: null
+						}
+					},
+					{
+						bchusd: {
+							endpointID: 'BCH-USD',
+							price: null
+						}
+					},
+					{
+						ethusd: {
+							endpointID: 'ETH-USD',
+							price: null
+						}
+					},
+					{
+						ltcusd: {
+							endpointID: 'LTC-USD',
+							price: null
+						}
+					},
+					{
+						ethbtc: {
+							endpointID: 'ETH-BTC',
+							price: null
+						}
+					},
+					{
+						ltcbtc: {
+							endpointID: 'LTC-BTC',
+							price: null
+						}
+					}
+				]
+			},
+			{
+				name: 'binance',
+				exchanges: [
+					{
+						btcusd: {
+							endpointID: 'BTCUSDT',
+							price: null
+						}
+					},
+					{
+						bchusd: {
+							endpointID: 'BCCUSDT',
+							price: null
+						}
+					},
+					{
+						ethusd: {
+							endpointID: 'ETHUSDT',
+							price: null
+						}
+					},
+					{
+						ltcusd: {
+							endpointID: 'LTCUSDT',
+							price: null
+						}
+					},
+					{
+						ethbtc: {
+							endpointID: 'ETHBTC',
+							price: null
+						}
+					},
+					{
+						ltcbtc: {
+							endpointID: 'LTCBTC',
+							price: null
+						}
+					}
+				]
+			}
+		]
   	},
   	computed: {
   		minmax: function() {
@@ -57,10 +190,7 @@ const vm = new Vue({
   		},
   		alerts: function(){
   			var threshold = .5;
-  			var btcusdAlert = false;
-  			var bchusdAlert = false;
-  			var ethusdAlert = false;
-  			var ltcusdAlert = false;
+  			var btcusdAlert, bchusdAlert, ethusdAlert, ltcusdAlert = false;
   			
 			if(this.diffs.btcusd.diff > threshold){
   				btcusdAlert = true;
@@ -102,6 +232,12 @@ const vm = new Vue({
   	},
   	methods: {
 		getPrices(){
+			
+			axios.get('https://api.binance.com/api/v1/ticker/24hr?symbol=BTCUSDT').then(function(response){
+				this.prices.binance.btcusd = response.data.askPrice;
+			}.bind(this));
+			
+			/*
 			axios.get('https://api.binance.com/api/v1/ticker/24hr?symbol=BTCUSDT').then(function(response){
 				this.prices.binance.btcusd = response.data.askPrice;
 			}.bind(this));
@@ -133,12 +269,19 @@ const vm = new Vue({
 			axios.get('https://api.gdax.com/products/LTC-USD/ticker').then(function(response){
 				this.prices.gdax.ltcusd = response.data.price;
 			}.bind(this));
+			*/
+		},
+		logMarkets(){
+			for(market in this.prices){
+				console.log(market);
+			}
 		}
   	},
 	mounted: function() {
 		this.getPrices();
-		this.interval = setInterval(function(){
+		/*this.interval = setInterval(function(){
 			this.getPrices();
-		}.bind(this), 60000);
+		}.bind(this), 60000);*/
+		this.logMarkets();
 	}
 });
